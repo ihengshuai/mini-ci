@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "sourceMap": false,
+    "paths": {
+      "@hengshuai/*": ["../*/src"],
+    }
+  },
+  "exclude": ["__tests__", "node_modules"]
+}

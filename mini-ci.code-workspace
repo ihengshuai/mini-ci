@@ -1,0 +1,11 @@
+{
+  "folders": [
+    { "name": "root", "path": "." },
+    { "name": "mini-cli", "path": "./packages/mini-cli" },
+    { "name": "mini-core", "path": "./packages/mini-core" },
+    { "name": "mini-helper", "path": "./packages/mini-helper" },
+    { "name": "mini-types", "path": "./packages/mini-types" },
+    { "name": "docs", "path": "./docs" },
+    { "name": "examples", "path": "./examples" },
+  ]
+}

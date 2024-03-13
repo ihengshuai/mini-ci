@@ -1,0 +1,7 @@
+# https://github.com/github-linguist/linguist/blob/master/docs/overrides.md#using-gitattributes
+*.js linguist-language=typescript
+*.tsx linguist-language=typescript
+*.html linguist-language=typescript
+*.yaml linguist-language=typescript
+*.md linguist-language=typescript
+*.json linguist-language=typescript

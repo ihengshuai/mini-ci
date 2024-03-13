@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES5",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "lib": ["esnext", "dom","DOM.Iterable"],
+    "types": ["node", "jest"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@mono/*": ["packages/*/src"]
+    },
+    "declaration": true,
+    "declarationDir": "dist/types",
+  },
+  "include": ["packages", "jest.config.ts"],
+}
