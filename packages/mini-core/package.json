@@ -7,7 +7,14 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && yalc publish",
+    "build": "esbuild --bundle ./src/index.ts --format=cjs --outfile=./dist/index.js --platform=node --minify --external:puppeteer && tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
+  },
+  "dependencies": {
+    "@hengshuai/mini-helper": "workspace:^0.0.1",
+    "@types/inquirer": "^9.0.7",
+    "esbuild": "^0.20.1",
+    "inquirer": "^9.2.16",
+    "puppeteer": "^22.4.1"
   }
 }

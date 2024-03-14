@@ -1,11 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "target": "ESNext",
+    "target": "ES5",
     "module": "commonjs",
     "declarationDir": "dist",
-    "skipDefaultLibCheck": true,
     "outDir": "dist",
     "sourceMap": false,
     "paths": {
