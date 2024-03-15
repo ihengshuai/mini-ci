@@ -1,0 +1,21 @@
+{
+  "name": "@hengshuai/mini-ci",
+  "version": "0.0.1",
+  "description": "a tool lib",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "build": "tsc -p ./tsconfig.build.json && yalc publish",
+    "test:unit": "jest --config jest.config.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@hengshuai/mini-core": "workspace:^0.0.1"
+  },
+  "peerDependencies": {
+    "typescript": "*"
+  }
+}
