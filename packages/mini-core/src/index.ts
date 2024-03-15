@@ -2,7 +2,7 @@ import { resolvePath, sleep, deleteFile } from "@hengshuai/mini-helper";
 import puppeteer from "puppeteer";
 import inquirer from "inquirer";
 
-enum Platform {
+export enum Platform {
   Wechat = "Wechat",
   Alipay = "Alipay",
 }

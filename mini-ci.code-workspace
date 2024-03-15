@@ -1,8 +1,10 @@
 {
   "folders": [
     { "name": "root", "path": "." },
-    { "name": "mini-cli", "path": "./packages/mini-cli" },
+    { "name": "mini-ci", "path": "./packages/mini-ci" },
     { "name": "mini-core", "path": "./packages/mini-core" },
+    { "name": "mini-wechat", "path": "./packages/mini-wechat" },
+    { "name": "mini-alipay", "path": "./packages/mini-alipay" },
     { "name": "mini-helper", "path": "./packages/mini-helper" },
     { "name": "mini-types", "path": "./packages/mini-types" },
     { "name": "docs", "path": "./docs" },
