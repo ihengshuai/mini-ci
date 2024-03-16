@@ -7,16 +7,30 @@
   "files": [
     "dist/**/*"
   ],
+  "bin": {
+    "mini-ci": "./dist/index.js"
+  },
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && yalc publish",
+    "build": "esbuild --bundle ./src/index.ts --format=cjs --outfile=./dist/index.js --platform=node --minify --packages=external && tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
   },
   "license": "MIT",
   "dependencies": {
     "@hengshuai/mini-core": "workspace:^0.0.1",
+    "@hengshuai/mini-helper": "workspace:^0.0.1",
     "@hengshuai/mini-type": "workspace:^0.0.1"
   },
   "peerDependencies": {
     "typescript": "*"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.0",
+    "@types/inquirer": "^9.0.7",
+    "chalk": "^5.3.0",
+    "commander": "^10.0.0",
+    "esbuild": "^0.20.1",
+    "fs-extra": "^11.1.0",
+    "inquirer": "^9.2.10",
+    "ora": "^8.0.1"
   }
 }

@@ -1,2 +1,5 @@
-export const logger = (...args: any) => console.log(...args);
-export const transform = (bool: boolean) => bool;
+import pkg from "../../package.json";
+
+const _VERSION = pkg.version;
+
+export const VERSION = _VERSION;

@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "declarationDir": "dist/types",
-    "outDir": "dist",
+    // "outDir": "dist",
     "sourceMap": false,
     "paths": {
       "@hengshuai/*": ["../*/src"],
