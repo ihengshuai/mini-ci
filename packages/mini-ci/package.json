@@ -13,7 +13,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@hengshuai/mini-core": "workspace:^0.0.1"
+    "@hengshuai/mini-core": "workspace:^0.0.1",
+    "@hengshuai/mini-type": "workspace:^0.0.1"
   },
   "peerDependencies": {
     "typescript": "*"

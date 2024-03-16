@@ -6,7 +6,7 @@
     { "name": "mini-wechat", "path": "./packages/mini-wechat" },
     { "name": "mini-alipay", "path": "./packages/mini-alipay" },
     { "name": "mini-helper", "path": "./packages/mini-helper" },
-    { "name": "mini-types", "path": "./packages/mini-types" },
+    { "name": "mini-type", "path": "./packages/mini-type" },
     { "name": "docs", "path": "./docs" },
     { "name": "examples", "path": "./examples" },
   ]

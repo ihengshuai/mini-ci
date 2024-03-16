@@ -1,46 +1,51 @@
+import { IMiniConfig } from "@hengshuai/mini-type";
 import { resolvePath, sleep, deleteFile } from "@hengshuai/mini-helper";
 import puppeteer from "puppeteer";
 import inquirer from "inquirer";
+import fs from "fs";
 
-export enum Platform {
-  Wechat = "Wechat",
-  Alipay = "Alipay",
-}
+export const defaultUserConfigPath = ".mini-ci/mini-ci.config.js";
 
-interface IMiniConfig {
-  name: string;
-  appId: string;
-  site?: string;
-  platform: Platform;
-  headless?: boolean;
-}
+let userConfig: IMiniConfig;
 
-export const getUserConfig = (): IMiniConfig => {
-  const ciConfig = require(resolvePath("./mini-ci.config.js"));
-  return ciConfig;
+export const getUserConfig = (): IMiniConfig | null => {
+  const userConfigPath = resolvePath(defaultUserConfigPath); // TODO: 从命令行获取用户配置路径
+
+  const hasUserConfigure = fs.existsSync(userConfigPath);
+  if (!hasUserConfigure) return null;
+
+  if (!userConfig) {
+    userConfig = require(userConfigPath);
+  }
+  return userConfig || null;
 };
 
 export const getConfig = (): IMiniConfig => {
   const userConfig = getUserConfig();
-  return userConfig;
+  // TODO: 默认配置与用户配置合并
+  return { ...userConfig } as IMiniConfig;
 };
 
+/**
+ * 定义ci配置
+ * @param miniConfig 用户配置
+ */
 export const defineConfig = (miniConfig: IMiniConfig) => {
   return {
     ...miniConfig,
-    uuid: 100,
   };
 };
 
 export const setup = async () => {
   const config = getConfig();
+
   const browser = await puppeteer.launch({
-    headless: config.headless ?? true,
+    headless: config.ci?.visual ?? true,
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-infobars"],
   });
   const page = await browser.newPage();
   await page.setViewport({ width: 1280, height: 800 });
-  await page.goto(config.site || "https://blog.usword.cn");
+  // await page.goto(config.site || "https://blog.usword.cn");
 
   await sleep(3000);
 
