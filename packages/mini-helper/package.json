@@ -7,7 +7,11 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json && yalc publish",
+    "build": "esbuild --bundle ./src/index.ts --format=cjs --outfile=./dist/index.js --platform=node --minify  && tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "esbuild": "^0.20.1"
   }
 }

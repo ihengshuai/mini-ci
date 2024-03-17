@@ -1,6 +1,7 @@
 import path from "path";
 import process from "process";
 import fs from "fs";
+import chalk from "chalk";
 
 export const rootDir = process.cwd();
 
@@ -20,3 +21,15 @@ export async function deleteFile(filePath: string) {
     console.error(err);
   }
 }
+
+/**
+ * 有颜色的log
+ */
+export const logger = {
+  info: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#b4b4b4")(...args)),
+  success: (...args: Array<string | number | boolean>) => console.log(chalk.greenBright(...args)),
+  warn: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#ff8515")(...args)),
+  error: (...args: Array<string | number | boolean>) => console.log(chalk(...args)),
+  log: (hexColor: string, ...args: Array<string | number | boolean>) => console.log(chalk.hex(hexColor)(...args)),
+  cyan: (...args: Array<string | number | boolean>) => console.log(chalk.cyanBright(...args)),
+};

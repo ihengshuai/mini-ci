@@ -1,4 +1,4 @@
-import { ICompileSettings, IProjectType } from "./core";
+import { IProjectConfig } from "./core";
 
 /** 小程序平台 */
 export enum Platform {
@@ -6,20 +6,22 @@ export enum Platform {
   Alipay = "Alipay",
 }
 
-export type IPlatformsConfig = {
-  [k in Platform]?: IPlatformConfig[];
+/** 每个平台私有配置 */
+export type IPlatformSpecific = {
+  [Platform.Wechat]: {
+    name?: string;
+  };
+  [Platform.Alipay]: {
+    name?: string;
+  };
 };
 
-/** 平台配置项 */
-export interface IPlatformConfig {
-  appId: string;
-  platform?: Platform;
-  projectPath: string;
-  privateKeyPath: string;
-  admin: string;
-  version?: string;
-  description?: string;
-  type?: IProjectType;
-  compiler?: ICompileSettings;
-  ignores?: string[];
-}
+/** 平台配置 */
+export type IPlatformsConfig = {
+  [k in Platform]?: {
+    platformSpecific: IPlatformSpecific[k];
+    subs: IProjectConfig[];
+  };
+};
+
+export type IPerPlatformOpts = {};

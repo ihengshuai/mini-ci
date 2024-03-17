@@ -5,6 +5,7 @@
     "module": "commonjs",
     "declarationDir": "dist",
     "outDir": "dist",
+    "emitDeclarationOnly": true,
     "sourceMap": false,
     "paths": {
       "@hengshuai/*": ["../*/src"],

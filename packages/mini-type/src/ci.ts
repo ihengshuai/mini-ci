@@ -1,3 +1,5 @@
+import { IProjectActionMode } from "./core";
+
 export interface ICI {
   /**
    * 可视化的
@@ -16,4 +18,13 @@ export interface ICI {
    * @default 60s
    */
   timeout?: number;
+}
+
+export interface ICITerminalConfig {
+  silent: boolean;
+  mode: IProjectActionMode;
+  config: string;
+  port: number;
+  timeout: number;
+  thread?: number;
 }
