@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "target": "ESNext",
+    "module": "commonjs",
+    "declarationDir": "dist",
+    "skipDefaultLibCheck": true,
+    "outDir": "dist",
+    "sourceMap": false,
+    "paths": {
+      "@hengshuai/*": ["../*/src"],
+    }
+  },
+  "exclude": ["__tests__", "node_modules"]
+}
