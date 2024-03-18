@@ -21,6 +21,11 @@ export interface IProjectConfig {
    * @default uploadCode
    */
   mode?: IProjectActionMode;
+  /**
+   * 不上传代码
+   * @default false
+   */
+  skipUpload?: boolean;
   version?: string;
   description?: string;
   type?: IProjectType;

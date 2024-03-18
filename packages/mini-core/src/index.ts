@@ -1,10 +1,10 @@
-import { ICITerminalConfig, IMiniConfig, IPlatformsConfig, IProjectConfig, Platform } from "@hengshuai/mini-type";
-import { resolvePath, sleep, deleteFile } from "@hengshuai/mini-helper";
-import inquirer from "inquirer";
+import { ICITerminalConfig, IMiniConfig, IProjectConfig, IProjectType, Platform } from "@hengshuai/mini-type";
+import { logger, resolvePath } from "@hengshuai/mini-helper";
+// import inquirer from "inquirer";
 import fs from "fs";
 
 export const defaultUserConfigPath = ".mini-ci/mini-ci.config.js";
-export const defaultTimeoutConfig = 120; // 120s
+export const defaultTimeoutConfig = 120 * 1000; // 120s
 
 let userConfig: IMiniConfig;
 let terminalConfig: ICITerminalConfig;
@@ -30,7 +30,8 @@ export const getConfig = (): IMiniConfig => {
   const userConfig = getUserConfig();
   const config = { ...userConfig } as IMiniConfig;
   config.ci = config.ci || {};
-  config.ci.timeout = terminalConfig?.timeout || defaultTimeoutConfig;
+  config.ci.timeout = (terminalConfig?.timeout ?? userConfig?.ci?.timeout) * 1000 || defaultTimeoutConfig;
+  config.ci.visual = config.ci.visual ?? false;
 
   return config;
 };
@@ -45,12 +46,14 @@ export const defineConfig = (miniConfig: IMiniConfig) => {
   };
 };
 
+// 从终端启动
 export const startByTerminal = async (tConfig: ICITerminalConfig) => {
   await setTerminalConfig(tConfig);
 
   await setup();
 };
 
+// 主程序入口
 export const setup = async () => {
   const config = getConfig();
 
@@ -58,23 +61,18 @@ export const setup = async () => {
     return process.exit(0);
   }
 
-  console.log("config", "------------------- config -----------------");
-
   const projects: IProjectConfig[] = [];
   (Object.keys(config.platforms || {}) as Platform[]).forEach(async pf => {
     if (!Platform[pf] || !Array.isArray(config.platforms[pf]?.subs)) return;
-    const platformSpecific = {
-      ...config.platforms[pf]?.platformSpecific,
-    };
     config.platforms[pf]?.subs.forEach(project => {
       projects.push({
         ...project,
         platform: pf,
+        type: project.type || IProjectType.MiniProgram,
+        skipUpload: project.skipUpload ?? false,
       });
     });
   });
-
-  console.log("projects", "---------------- projects -----------------\n");
 
   await processQueue(projects, config);
 };
@@ -86,7 +84,8 @@ async function processQueue(projects: IProjectConfig[], config: IMiniConfig) {
       const project = projects[idx];
       const { platform } = project;
       const { setup } = require(`@hengshuai/mini-${platform?.toLowerCase()}`);
-      await setup(project, config);
+      logger.info(`当前进度 [${idx + 1}/${len}]\n`);
+      await setup(project, config.platforms[project.platform!]?.platformSpecific, config);
       idx++;
       return await next(idx);
     }

@@ -14,8 +14,8 @@ export interface ICI {
   thread?: number;
 
   /**
-   * 超时时间(单位 s)
-   * @default 60s
+   * 超时时间(单位 ms)
+   * @default 120s
    */
   timeout?: number;
 }
