@@ -5,7 +5,7 @@ import { IMiniConfig, IPlatformSpecific, IProjectConfig, Platform } from "@hengs
 import { logger, resolvePath } from "@hengshuai/mini-helper";
 import * as CI from "miniprogram-ci";
 
-export async function uploadCodeToPlatform(
+export async function setupUploadCode(
   projectConfig: IProjectConfig,
   platformSpecificConfig: IPlatformSpecific[Platform.Wechat],
   config: IMiniConfig

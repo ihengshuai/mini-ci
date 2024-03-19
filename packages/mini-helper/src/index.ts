@@ -2,7 +2,7 @@ import path from "path";
 import process from "process";
 import fs from "fs";
 import chalk from "chalk";
-import { MiniCIDefaultDir, Platform } from "@hengshuai/mini-type";
+import { MiniAssetsDir, Platform } from "@hengshuai/mini-type";
 import open from "open";
 
 export const rootDir = process.cwd();
@@ -30,7 +30,7 @@ export async function deleteFile(filePath: string) {
  * @param platform 平台
  */
 export function createImgFileName(platform?: Platform) {
-  return `${MiniCIDefaultDir}/${platform ? platform : "default"}__${+new Date()}.png`;
+  return `${MiniAssetsDir}/${platform ? platform : "default"}__${+new Date()}.png`;
 }
 
 /**
@@ -47,4 +47,35 @@ export const logger = {
 
 export function openBrowser(url: string) {
   open(url);
+}
+
+/**
+ * 创建二维码HTML模板
+ * @param type 平台
+ * @param timeout 超时时间
+ * @param qrURL 二维码地址
+ */
+export function createQrHTMLTemplate(type: Platform, timeout: number, qrURL: string) {
+  return `
+    <div style="display:flex;justify-content: center;align-items: center;flex-direction: column;">
+      <h1>请使用开发者微信扫码认证</h1>
+      <p style="color:#999;font-size:14px;">扫码后可关闭页面</p>
+      <img src="${qrURL}" />
+      <p id="qr_expired">${timeout / 1000}s后二维码过期</p>
+      <p style="color:#999;font-size:14px;">可通过 mini-ci start -t 时间 / mini-ci.config调整过期时间</p>
+    </div>
+    <script>
+      const timeout = ${timeout};
+      let step = 0;
+      const qrExpired = document.getElementById("qr_expired");
+      setInterval(() => {
+        step++;
+        if (step > timeout / 1000) {
+          window.close();
+        } else {
+          qrExpired.innerText = timeout / 1000 - step + "s后二维码过期";
+        }
+      }, 1000);
+    </script>
+  `;
 }
