@@ -10,9 +10,17 @@ export enum Platform {
 export type IPlatformSpecific = {
   [Platform.Wechat]: {
     name?: string;
+    /** 项目路径 */
+    projectPath?: string;
+    /** 上传代码私钥地址 */
+    privateKeyPath?: string;
   };
   [Platform.Alipay]: {
     name?: string;
+    /** 项目路径 */
+    projectPath?: string;
+    /** 上传代码私钥地址 */
+    privateKeyPath?: string;
   };
 };
 

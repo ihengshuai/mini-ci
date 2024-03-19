@@ -30,7 +30,7 @@ program
     }
     return v as IProjectActionMode;
   })
-  .option("-s, --silent <boolean>", "是否静默模式", v => v === "true")
+  .option("-s, --silent <boolean>", "默认静默模式不启动可视化界面", v => v === "true")
   .option("-t, --timeout <number>", "超时时间", v => parseInt(v) || null)
   .option("--thread <number>", "线程数", v => parseInt(v) || null)
   .action(async (opts: ICITerminalConfig) => {

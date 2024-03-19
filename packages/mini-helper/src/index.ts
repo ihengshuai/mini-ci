@@ -3,11 +3,12 @@ import process from "process";
 import fs from "fs";
 import chalk from "chalk";
 import { MiniCIDefaultDir, Platform } from "@hengshuai/mini-type";
+import open from "open";
 
 export const rootDir = process.cwd();
 
 /** 取ci执行目录 */
-export const resolvePath = (p: string) => path.resolve(rootDir, p);
+export const resolvePath = (p = "") => path.resolve(rootDir, p);
 
 export function sleep(ms = 500) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -39,7 +40,11 @@ export const logger = {
   info: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#b4b4b4")(...args)),
   success: (...args: Array<string | number | boolean>) => console.log(chalk.greenBright(...args)),
   warn: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#ff8515")(...args)),
-  error: (...args: Array<string | number | boolean>) => console.log(chalk(...args)),
+  error: (...args: Array<string | number | boolean>) => console.log(chalk.red(...args)),
   log: (hexColor: string, ...args: Array<string | number | boolean>) => console.log(chalk.hex(hexColor)(...args)),
   cyan: (...args: Array<string | number | boolean>) => console.log(chalk.cyanBright(...args)),
 };
+
+export function openBrowser(url: string) {
+  open(url);
+}

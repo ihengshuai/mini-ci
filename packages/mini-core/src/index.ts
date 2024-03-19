@@ -1,4 +1,11 @@
-import { ICITerminalConfig, IMiniConfig, IProjectConfig, IProjectType, Platform } from "@hengshuai/mini-type";
+import {
+  ICITerminalConfig,
+  IMiniConfig,
+  IProjectActionMode,
+  IProjectConfig,
+  IProjectType,
+  Platform,
+} from "@hengshuai/mini-type";
 import { logger, resolvePath } from "@hengshuai/mini-helper";
 // import inquirer from "inquirer";
 import fs from "fs";
@@ -31,7 +38,7 @@ export const getConfig = (): IMiniConfig => {
   const config = { ...userConfig } as IMiniConfig;
   config.ci = config.ci || {};
   config.ci.timeout = (terminalConfig?.timeout ?? userConfig?.ci?.timeout) * 1000 || defaultTimeoutConfig;
-  config.ci.visual = config.ci.visual ?? false;
+  config.ci.visual = typeof terminalConfig.silent === "boolean" ? !terminalConfig.silent : config.ci.visual ?? false;
 
   return config;
 };
@@ -64,12 +71,17 @@ export const setup = async () => {
   const projects: IProjectConfig[] = [];
   (Object.keys(config.platforms || {}) as Platform[]).forEach(async pf => {
     if (!Platform[pf] || !Array.isArray(config.platforms[pf]?.subs)) return;
+    const thePlatform = config.platforms[pf];
     config.platforms[pf]?.subs.forEach(project => {
       projects.push({
         ...project,
+        projectPath: resolvePath(project.projectPath || thePlatform?.platformSpecific.projectPath),
+        privateKeyPath: resolvePath(project.privateKeyPath || thePlatform?.platformSpecific.privateKeyPath),
         platform: pf,
         type: project.type || IProjectType.MiniProgram,
         skipUpload: project.skipUpload ?? false,
+        mode: terminalConfig.mode ?? project.mode ?? IProjectActionMode.UPLOAD_CODE,
+        visual: project.visual ?? config.ci?.visual,
       });
     });
   });
@@ -84,7 +96,7 @@ async function processQueue(projects: IProjectConfig[], config: IMiniConfig) {
       const project = projects[idx];
       const { platform } = project;
       const { setup } = require(`@hengshuai/mini-${platform?.toLowerCase()}`);
-      logger.info(`当前进度 [${idx + 1}/${len}]\n`);
+      logger.info(`\n当前进度 [${idx + 1}/${len}]\n`);
       await setup(project, config.platforms[project.platform!]?.platformSpecific, config);
       idx++;
       return await next(idx);

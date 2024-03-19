@@ -13,8 +13,10 @@ export interface IMiniConfig {
 export interface IProjectConfig {
   appId: string;
   platform?: Platform;
-  projectPath: string;
-  privateKeyPath: string;
+  /** 项目路径 */
+  projectPath?: string;
+  /** 上传代码私钥地址 */
+  privateKeyPath?: string;
   admin: string;
   /**
    * 发布模式
@@ -28,12 +30,20 @@ export interface IProjectConfig {
   skipUpload?: boolean;
   version?: string;
   description?: string;
+  /**
+   * 当前项目是否可视化(优先级：项目 > ci > config)
+   * @default false
+   */
+  visual?: boolean;
   type?: IProjectType;
   compiler?: ICompileSettings;
   ignores?: string[];
 }
 
-/** 项目发布模式 */
+/**
+ * 项目发布模式
+ * @default uploadCode
+ */
 export enum IProjectActionMode {
   /** 上传代码 */
   UPLOAD_CODE = "uploadCode",

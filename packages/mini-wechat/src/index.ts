@@ -1,4 +1,4 @@
-import { createImgFileName, deleteFile, logger, resolvePath, sleep } from "@hengshuai/mini-helper";
+import { createImgFileName, deleteFile, logger, openBrowser, resolvePath, sleep } from "@hengshuai/mini-helper";
 import {
   IMiniConfig,
   IPlatformSpecific,
@@ -20,11 +20,23 @@ export async function setup(
   if (!fs.existsSync(resolvePath(MiniCIDefaultDir))) {
     await fs.mkdirSync(resolvePath(MiniCIDefaultDir));
   }
+
   const qrFileName = createImgFileName(Platform.Wechat);
+  const qrFilePath = resolvePath(qrFileName);
+  const htmlPageName = `${MiniCIDefaultDir}/index.html`;
+  const htmlPath = resolvePath(htmlPageName);
+
   try {
-    // console.log("setupWechat", projectConfig, platformSpecificConfig, config);
+    if (!projectConfig.appId) {
+      logger.error(`该项目缺少appId和projectPath!`);
+      return process.exit(0);
+    }
 
     if (projectConfig.skipUpload !== true) {
+      if (!projectConfig.privateKeyPath || !projectConfig.projectPath) {
+        logger.error(`请设置该项目privateKeyPath和projectPath! appId: ${projectConfig.appId}`);
+        return process.exit(0);
+      }
       logger.cyan(`======> 正在上传微信平台代码, appId: ${projectConfig.appId}`);
 
       await uploadCodeToPlatform(projectConfig, platformSpecificConfig, config);
@@ -32,37 +44,43 @@ export async function setup(
 
     if (projectConfig.mode === IProjectActionMode.UPLOAD_CODE) return;
 
-    await sleep(1000);
+    if (!projectConfig.admin) {
+      logger.error(`请设置该项目admin地址! appId: ${projectConfig.appId}`);
+      return process.exit(0);
+    }
+
+    const visual = projectConfig.visual;
+    const timeout = config.ci!.timeout!;
 
     const browser = await puppeteer.launch({
-      headless: typeof config.ci?.visual === "boolean" ? !config.ci?.visual : true,
-      timeout: config.ci?.timeout,
+      headless: !visual,
+      timeout,
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-infobars"],
     });
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
-    await page.goto(projectConfig.admin || "https://blog.usword.cn");
+    await page.goto(projectConfig.admin);
 
-    await sleep(3000);
+    if (!visual) {
+      // 获取登录二维码
+      const loginCode = await page.waitForSelector(
+        ".login__type__container__scan .login__type__container__scan__qrcode",
+        {
+          visible: true,
+          timeout: config.ci!.timeout,
+        }
+      );
+      await sleep(1000);
+      const loginCodeClip = await loginCode?.boundingBox();
 
-    const clip = await page.evaluate(() => {
-      const { x, y, width, height } =
-        document && document.querySelector(".login_frame.input_login")!.getBoundingClientRect();
-      return {
-        x,
-        y,
-        width,
-        height,
-      };
-    });
-
-    await page.screenshot({
-      path: resolvePath(qrFileName),
-      clip,
-    });
-    logger.info("请扫码认证\n");
-
-    await sleep(1000);
+      await page.screenshot({
+        path: qrFilePath,
+        clip: loginCodeClip!,
+      });
+      logger.info("请扫码认证\n");
+      await fs.writeFileSync(htmlPath, `<h1>请扫码认证</h1><img src="${qrFilePath}" />`, { encoding: "utf8" });
+      openBrowser(htmlPath);
+    }
 
     // 进入版本管理页
     const versionManagerMenu = await page.waitForSelector("#menuBar .menu_item a", {
@@ -80,20 +98,13 @@ export async function setup(
     );
     reviewVersionBtn?.click();
 
-    await sleep(2000);
+    // await sleep(2000);
 
-    // const protocolBtn = await page.waitForSelector(".code_submit_dialog .weui-desktop-form__checkbox", {
-    //   timeout: 7000,
-    //   visible: false,
-    //   hidden: true,
-    // });
-    // protocolBtn?.click();
-
-    // 协议勾选
-    await page.evaluate(async () => {
-      const checkbox = document.querySelector(".code_submit_dialog .weui-desktop-form__checkbox")! as HTMLElement;
-      checkbox.click();
+    const protocolBtn = await page.waitForSelector(".code_submit_dialog .weui-desktop-icon-checkbox", {
+      timeout,
+      visible: true,
     });
+    protocolBtn?.click();
 
     // 勾选协议后下一步按钮
     const protocolNextBtn = await page.waitForSelector(".code_submit_dialog .weui-desktop-dialog__ft button", {
@@ -124,8 +135,8 @@ export async function setup(
 
     // logger.info(newPage?.url());
 
-    // 删除二维码
-    await deleteFile(qrFileName);
+    // 删除二维码和html
+    await Promise.all([deleteFile(qrFileName), deleteFile(htmlPageName)]);
 
     await inquirer.prompt([
       {
@@ -138,7 +149,7 @@ export async function setup(
     await page.close();
     await browser.close();
   } catch (error: any) {
-    qrFileName && (await deleteFile(qrFileName));
+    await Promise.all([deleteFile(qrFileName), deleteFile(htmlPageName)]);
     error?.message && logger.error("【wechat error】", error.message);
     process.exit(1);
   }
