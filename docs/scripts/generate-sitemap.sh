@@ -5,7 +5,7 @@
 files=$(find ./docs -name '*.md')
 filemap=$(echo $files | tr ',' ' ')
 domain=https://${DOMAIN}
-sitemapDir=./dist/sitemap.txt
+sitemapDir=./docs/dist/sitemap.txt
 
 echo $domain >>$sitemapDir
 
