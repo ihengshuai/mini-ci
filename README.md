@@ -14,11 +14,11 @@
 一款面向小程序多端开发的自动化提审、发版CI工具，技术基于NodeJS
 
 ## Docs
-- [mini-ci](./packages/mini-ci/README.md)
-- [mini-core](./packages/mini-core/README.md)
-- [mini-wechat](./packages/mini-wechat/README.md)
-- [mini-helper](./packages/mini-helper/README.md)
-- [mini-type](./packages/mini-type/README.md)
+- [mini-ci](./packages/mini-ci)
+- [mini-core](./packages/mini-core)
+- [mini-wechat](./packages/mini-wechat)
+- [mini-helper](./packages/mini-helper)
+- [mini-type](./packages/mini-type)
 
 ## 使用
 使用自己熟悉的npm包管理工具如：npm、yarn、pnpm等进行安装，支持局部或全局安装
