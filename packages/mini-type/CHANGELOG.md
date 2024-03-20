@@ -1,5 +1,11 @@
 # @hengshuai/mini-type
 
+## 0.1.4
+
+### Patch Changes
+
+- 4ab8ff0: 调整自动发包步骤
+
 ## 0.1.3
 
 ### Patch Changes
