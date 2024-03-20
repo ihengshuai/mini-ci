@@ -1,5 +1,14 @@
 # @hengshuai/mini-core
 
+## 0.1.3
+
+### Patch Changes
+
+- 14e6159: 测试发版
+- Updated dependencies [14e6159]
+  - @hengshuai/mini-helper@0.1.3
+  - @hengshuai/mini-type@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
