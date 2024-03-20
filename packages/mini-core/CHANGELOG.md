@@ -1,5 +1,14 @@
 # @hengshuai/mini-core
 
+## 0.1.2
+
+### Patch Changes
+
+- 0ed1c80: 测试ci
+- Updated dependencies [0ed1c80]
+  - @hengshuai/mini-helper@0.1.2
+  - @hengshuai/mini-type@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
