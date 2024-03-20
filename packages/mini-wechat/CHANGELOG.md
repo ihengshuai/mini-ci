@@ -1,5 +1,18 @@
 # @hengshuai/mini-wechat
 
+## 0.1.0
+
+### Minor Changes
+
+- 更新打包脚本
+
+### Patch Changes
+
+- Updated dependencies
+  - @hengshuai/mini-core@0.1.0
+  - @hengshuai/mini-helper@0.1.0
+  - @hengshuai/mini-type@0.1.0
+
 ## 0.0.6
 
 ### Patch Changes
