@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-type",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -9,5 +9,8 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

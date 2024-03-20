@@ -68,6 +68,7 @@
     "turbo": "^1.10.13"
   },
   "dependencies": {
+    "@changesets/cli": "^2.27.1",
     "typescript": "^5.1.6"
   }
 }

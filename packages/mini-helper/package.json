@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-helper",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,9 +11,14 @@
     "test:unit": "jest --config jest.config.ts"
   },
   "dependencies": {
-    "@hengshuai/mini-type": "workspace:^0.0.1",
+    "@hengshuai/mini-type": "workspace:^0.0.6"
+  },
+  "devDependencies": {
     "chalk": "^5.3.0",
-    "esbuild": "^0.20.1",
-    "open": "8.4.2"
+    "open": "8.4.2",
+    "esbuild": "^0.20.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

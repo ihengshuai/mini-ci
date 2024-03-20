@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-wechat",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -11,13 +11,18 @@
     "test:unit": "jest --config jest.config.ts"
   },
   "dependencies": {
-    "@hengshuai/mini-core": "workspace:^0.0.1",
-    "@hengshuai/mini-helper": "workspace:^0.0.1",
-    "@hengshuai/mini-type": "workspace:^0.0.1",
-    "@types/inquirer": "^9.0.7",
-    "esbuild": "^0.20.1",
-    "inquirer": "^9.2.16",
+    "@hengshuai/mini-core": "workspace:^0.0.6",
+    "@hengshuai/mini-helper": "workspace:^0.0.6",
+    "@hengshuai/mini-type": "workspace:^0.0.6",
     "miniprogram-ci": "^1.9.15",
     "puppeteer": "^22.4.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.1",
+    "@types/inquirer": "^9.0.7",
+    "inquirer": "^9.2.12"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

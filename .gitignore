@@ -4,6 +4,7 @@ node_modules
 */.vitepress/cache
 packages/ui/global.d.ts
 .turbo
+.npmrc
 
 # Logs
 logs
