@@ -15,6 +15,23 @@
     "test:unit": "jest --config jest.config.ts"
   },
   "license": "MIT",
+  "keywords": [
+    "小程序ci工具",
+    "小程序自动化发包助手"
+  ],
+  "author": {
+    "name": "ihengshuai",
+    "email": "wsm_1105@163.com",
+    "url": "https://github.com/ihengshuai"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ihengshuai/mini-ci.git"
+  },
+  "homepage": "https://github.com/ihengshuai/mini-ci",
+  "bugs": {
+    "url": "https://github.com/ihengshuai/mini-ci/issues"
+  },
   "dependencies": {
     "@hengshuai/mini-core": "workspace:^0.0.6",
     "@hengshuai/mini-helper": "workspace:^0.0.6",

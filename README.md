@@ -13,7 +13,14 @@
 
 一款面向小程序多端开发的自动化提审、发版CI工具，技术基于NodeJS
 
-## 起步
+## Docs
+- [mini-ci](./packages/mini-ci/README.md)
+- [mini-core](./packages/mini-core/README.md)
+- [mini-wechat](./packages/mini-wechat/README.md)
+- [mini-helper](./packages/mini-helper/README.md)
+- [mini-type](./packages/mini-type/README.md)
+
+## 使用
 使用自己熟悉的npm包管理工具如：npm、yarn、pnpm等进行安装，支持局部或全局安装
 
 ### 安装
@@ -27,14 +34,41 @@ npm install -g @hengshuai/mini-ci
 ```
 
 ### 配置
-CI默认会读取项目下的`mini-ci.config.js`文件，以commonjs格式进行配置，最终会被node读取
+CI默认会读取项目下的`.mini-ci/mini-ci.config.js`文件，以commonjs格式进行配置，最终会被node读取
 
 ```js
 // mini-ci.config.js
+const { defineConfig } = require("@hengshuai/mini-core");
+const { Platform, IProjectActionMode } = require("@hengshuai/mini-type");
 
-module.exports = {
-  // ...
-}
+module.exports = defineConfig({
+  ci: {},
+  platforms: {
+    // WeChat平台
+    [Platform.Wechat]: {
+      platformSpecific: {
+        // 包地址
+        projectPath: "./dist",
+        // 上传代码的私钥
+        privateKeyPath: ".mini-ci/keys/wechat-upload-code.key",
+      },
+      subs: [
+        {
+          appId: "Your AppId",
+          admin: "https://mp.weixin.qq.com",
+          version: "1.0.0",
+          mode: IProjectActionMode.REVIEW,
+          description: "测试ci  " + +new Date,
+          compiler: {
+            // es6: false,
+            // es7: true,
+            // minifyJS: true,
+          },
+        },
+      ]
+    }
+  }
+})
 ```
 
 ### 运行
@@ -64,7 +98,7 @@ npm run ci
 相关功能正在开发中...
 
 - [x] 代码上传
-- [ ] 提审
+- [x] 提审
 - [ ] 发版
 - [ ] 版本管理
 - [ ] 多端同步
@@ -72,7 +106,9 @@ npm run ci
 
 ## 架构与流程
 ![](./架构图.png)
-<p align="center">架构图</p>
+
+架构图
 
 ![](./流程图.png)
-<p align="center">流程图</p>
+
+流程图
