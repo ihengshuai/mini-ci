@@ -2,6 +2,7 @@
 
 module.exports = {
   extends: ["@commitlint/config-conventional"],
+  ignores: [commit => /^Version Packages.*/.test(commit)],
   rules: {
     "type-enum": [
       2,
