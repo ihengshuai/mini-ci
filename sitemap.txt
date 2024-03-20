@@ -1,0 +1,5 @@
+https://mini-ci.usword.cn
+https://mini-ci.usword.cn/index.html
+https://mini-ci.usword.cn/start.html
+https://mini-ci.usword.cn/api/base.html
+https://mini-ci.usword.cn/README.html
