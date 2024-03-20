@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-wechat",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -29,9 +29,9 @@
     "url": "https://github.com/ihengshuai/mini-ci/issues"
   },
   "dependencies": {
-    "@hengshuai/mini-core": "workspace:^0.1.2",
-    "@hengshuai/mini-helper": "workspace:^0.1.2",
-    "@hengshuai/mini-type": "workspace:^0.1.2",
+    "@hengshuai/mini-core": "workspace:^0.1.3",
+    "@hengshuai/mini-helper": "workspace:^0.1.3",
+    "@hengshuai/mini-type": "workspace:^0.1.3",
     "miniprogram-ci": "^1.9.15",
     "puppeteer": "^22.4.1"
   },
