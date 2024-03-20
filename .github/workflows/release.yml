@@ -23,7 +23,7 @@ jobs:
         run: npm i pnpm -g
 
       - name: Install Dependencies
-        run: pnpm
+        run: pnpm i -r
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
