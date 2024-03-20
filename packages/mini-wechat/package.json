@@ -7,7 +7,8 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "esbuild --bundle ./src/index.ts --format=cjs --outfile=./dist/index.js --platform=node --minify --external:puppeteer --external:miniprogram-ci --external:@hengshuai/mini-* && tsc -p ./tsconfig.build.json && yalc publish",
+    "build": "node scripts/release.js && tsc -p ./tsconfig.build.json",
+    "build:dev": "node scripts/release.js && tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
   },
   "keywords": [
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.20.1",
+    "esbuild-plugin-copy": "^2.1.1",
     "@types/inquirer": "^9.0.7",
     "inquirer": "^9.2.12"
   },

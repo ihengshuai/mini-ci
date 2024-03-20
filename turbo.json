@@ -4,6 +4,9 @@
     "build": {
       "dependsOn": ["^build"]
     },
+    "build:dev": {
+      "dependsOn": ["^build:dev"]
+    },
     "dev": {
       "cache": false
     }

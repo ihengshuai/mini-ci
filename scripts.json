@@ -5,9 +5,14 @@
     "desc": "正在启动本地开发服务",
     "command": "turbo run dev --filter=!examples --filter=!docs"
   },
+  "build:dev": {
+    "alias": "Build:Dev",
+    "desc": "开发环境正在打包...",
+    "command": "turbo run build:dev --filter=!examples --filter=!docs"
+  },
   "build": {
     "alias": "Build",
-    "desc": "正在打包...",
+    "desc": "生产环境正在打包...",
     "command": "turbo run build --filter=!examples --filter=!docs"
   },
   "docs:dev": {

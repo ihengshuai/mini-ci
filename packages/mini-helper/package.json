@@ -7,7 +7,8 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "esbuild --bundle ./src/index.ts --format=cjs --outfile=./dist/index.js --platform=node --minify  && tsc -p ./tsconfig.build.json && yalc publish",
+    "build": "node scripts/release.js && tsc -p ./tsconfig.build.json",
+    "build:dev": "node scripts/release.js && tsc -p ./tsconfig.build.json && yalc publish",
     "test:unit": "jest --config jest.config.ts"
   },
   "keywords": [
@@ -33,7 +34,8 @@
   "devDependencies": {
     "chalk": "^5.3.0",
     "open": "8.4.2",
-    "esbuild": "^0.20.1"
+    "esbuild": "^0.20.1",
+    "esbuild-plugin-copy": "^2.1.1"
   },
   "engines": {
     "node": ">=18.0.0"
