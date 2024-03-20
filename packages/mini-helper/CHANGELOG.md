@@ -1,5 +1,13 @@
 # @hengshuai/mini-helper
 
+## 0.1.1
+
+### Patch Changes
+
+- 测试发包
+- Updated dependencies
+  - @hengshuai/mini-type@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
