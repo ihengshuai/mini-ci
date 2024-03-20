@@ -1,5 +1,11 @@
 # @hengshuai/mini-type
 
+## 0.1.2
+
+### Patch Changes
+
+- 0ed1c80: 测试ci
+
 ## 0.1.1
 
 ### Patch Changes
