@@ -18,10 +18,12 @@ jobs:
       - name: Setup Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2.2.4
 
       - name: Install Dependencies
-        run: yarn
+        run: pnpm
 
       - name: Create Release Pull Request
         uses: changesets/action@v1
