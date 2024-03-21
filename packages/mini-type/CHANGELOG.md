@@ -1,5 +1,11 @@
 # @hengshuai/mini-type
 
+## 0.1.5
+
+### Patch Changes
+
+- 补充版本问题
+
 ## 0.1.4
 
 ### Patch Changes

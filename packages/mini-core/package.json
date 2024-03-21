@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-core",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -29,8 +29,8 @@
     "url": "https://github.com/ihengshuai/mini-ci/issues"
   },
   "dependencies": {
-    "@hengshuai/mini-helper": "workspace:^0.1.4",
-    "@hengshuai/mini-type": "workspace:^0.1.4",
+    "@hengshuai/mini-helper": "workspace:^0.1.5",
+    "@hengshuai/mini-type": "workspace:^0.1.5",
     "puppeteer": "^22.4.1"
   },
   "devDependencies": {

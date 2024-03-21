@@ -1,6 +1,6 @@
 {
   "name": "@hengshuai/mini-helper",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -29,7 +29,7 @@
     "url": "https://github.com/ihengshuai/mini-ci/issues"
   },
   "dependencies": {
-    "@hengshuai/mini-type": "workspace:^0.1.4"
+    "@hengshuai/mini-type": "workspace:^0.1.5"
   },
   "devDependencies": {
     "chalk": "^5.3.0",
