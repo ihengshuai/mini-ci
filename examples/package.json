@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hengshuai/mini-ci": "workspace:^0.1.6",
+    "@hengshuai/mini-ci": "workspace:^0.1.7-beta.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {

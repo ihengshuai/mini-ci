@@ -1,5 +1,13 @@
 # @hengshuai/mini-helper
 
+## 0.1.7-beta.0
+
+### Patch Changes
+
+- 添加debug模式
+- Updated dependencies
+  - @hengshuai/mini-type@0.1.7-beta.0
+
 ## 0.1.6
 
 ### Patch Changes

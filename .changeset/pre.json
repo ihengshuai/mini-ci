@@ -1,0 +1,16 @@
+{
+  "mode": "exit",
+  "tag": "beta",
+  "initialVersions": {
+    "docs": "1.0.0",
+    "examples": "0.0.1",
+    "@hengshuai/mini-ci": "0.1.6",
+    "@hengshuai/mini-core": "0.1.6",
+    "@hengshuai/mini-helper": "0.1.6",
+    "@hengshuai/mini-type": "0.1.6",
+    "@hengshuai/mini-wechat": "0.1.6"
+  },
+  "changesets": [
+    "poor-beds-tap"
+  ]
+}

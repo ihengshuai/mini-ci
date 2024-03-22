@@ -1,5 +1,11 @@
 # @hengshuai/mini-type
 
+## 0.1.7-beta.0
+
+### Patch Changes
+
+- 添加debug模式
+
 ## 0.1.6
 
 ### Patch Changes
