@@ -1,4 +1,4 @@
-import { logger, resolvePath } from "@hengshuai/mini-helper";
+import { isDebug, logger, resolvePath } from "@hengshuai/mini-helper";
 import {
   IMiniConfig,
   IPlatformSpecific,
@@ -34,7 +34,9 @@ export async function setup(
       }
       logger.cyan(`======> 正在上传微信平台代码, appId: ${projectConfig.appId}`);
 
-      await setupUploadCode(projectConfig, platformSpecificConfig, config);
+      if (!isDebug()) {
+        await setupUploadCode(projectConfig, platformSpecificConfig, config);
+      }
     }
 
     if (projectConfig.mode === IProjectActionMode.UPLOAD_CODE) return;

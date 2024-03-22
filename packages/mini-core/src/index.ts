@@ -1,4 +1,5 @@
 import {
+  CI_ENVS,
   ICITerminalConfig,
   IMiniConfig,
   IProjectActionMode,
@@ -6,7 +7,7 @@ import {
   IProjectType,
   Platform,
 } from "@hengshuai/mini-type";
-import { logger, resolvePath } from "@hengshuai/mini-helper";
+import { isDebug, logger, resolvePath, setCIEnv } from "@hengshuai/mini-helper";
 // import inquirer from "inquirer";
 import fs from "fs";
 
@@ -39,6 +40,13 @@ export const getConfig = (): IMiniConfig => {
   config.ci = config.ci || {};
   config.ci.timeout = (terminalConfig?.timeout ?? userConfig?.ci?.timeout) * 1000 || defaultTimeoutConfig;
   config.ci.visual = typeof terminalConfig.silent === "boolean" ? !terminalConfig.silent : config.ci.visual ?? false;
+  config.ci.debug = typeof terminalConfig.debug === "boolean" ? terminalConfig.debug : userConfig?.ci?.debug || false;
+
+  // debug模式开始图形界面
+  if (isDebug() || config.ci.debug) {
+    config.ci.visual = true;
+    setCIEnv(CI_ENVS.DEBUG);
+  }
 
   return config;
 };
@@ -81,7 +89,7 @@ export const setup = async () => {
         type: project.type || IProjectType.MiniProgram,
         skipUpload: project.skipUpload ?? false,
         mode: terminalConfig.mode ?? project.mode ?? IProjectActionMode.UPLOAD_CODE,
-        visual: project.visual ?? config.ci?.visual,
+        visual: isDebug() ? true : project.visual ?? config.ci?.visual,
       });
     });
   });
@@ -95,8 +103,11 @@ async function processQueue(projects: IProjectConfig[], config: IMiniConfig) {
     if (idx < len) {
       const project = projects[idx];
       const { platform } = project;
+
+      // 运行不同平台业务逻辑
       const { setup } = require(`@hengshuai/mini-${platform?.toLowerCase()}`);
-      logger.info(`\n当前进度 [${idx + 1}/${len}]\n`);
+
+      logger.info(`当前进度 [${idx + 1}/${len}]`);
       await setup(project, config.platforms[project.platform!]?.platformSpecific, config);
       idx++;
       return await next(idx);

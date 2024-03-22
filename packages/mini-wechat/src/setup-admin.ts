@@ -10,6 +10,7 @@ import {
   openBrowser,
   sleep,
   createQrHTMLTemplate,
+  isDebug,
 } from "@hengshuai/mini-helper";
 import {
   Platform,
@@ -19,7 +20,7 @@ import {
   MiniAssetsDir,
   IProjectActionMode,
 } from "@hengshuai/mini-type";
-import inquirer from "inquirer";
+// import inquirer from "inquirer";
 import puppeteer, { Browser, Page } from "puppeteer";
 import fs from "fs";
 
@@ -71,7 +72,7 @@ export async function setupAdmin(
         path: qrFilePath,
         clip: loginCodeClip!,
       });
-      logger.info("请扫码认证\n");
+      logger.info("请扫码认证");
       await fs.writeFileSync(htmlPath, createQrHTMLTemplate(Platform.Wechat, timeout, qrFilePath), {
         encoding: "utf8",
       });
@@ -95,14 +96,29 @@ export async function setupAdmin(
     // 删除二维码和html
     await Promise.all([deleteFile(qrFilePath), deleteFile(htmlPath)]);
 
-    await inquirer.prompt([
-      {
-        name: "processDone",
-        type: "confirm",
-        message: "ci执行结束,继续以释放资源",
-      },
-    ]);
+    // if (isDebug()) {
+    //   await inquirer.prompt([
+    //     {
+    //       name: "processDone",
+    //       type: "confirm",
+    //       message: "debug模式流程已跑完,确定以结束!",
+    //     },
+    //   ]);
+    // } else {
+    //   await inquirer.prompt([
+    //     {
+    //       name: "processDone",
+    //       type: "confirm",
+    //       message: "ci执行结束,继续以释放资源",
+    //     },
+    //   ]);
+    // }
 
+    if (isDebug()) {
+      logger.success(`appId: ${projectConfig.appId} done! 🎉`);
+    }
+
+    await sleep(1000);
     await page.close();
     await browser.close();
   } catch (error) {
@@ -141,8 +157,8 @@ async function handleReview({ browser, page, config, projectConfig, platformSpec
       }
 
       if (!versionElem) {
-        logger.error(`版本错误! appId: ${projectConfig.appId}`);
-        return process.exit(0);
+        throw Error(`版本错误! version: ${projectConfig.version} 当前版本没找到! appId: ${projectConfig.appId}`);
+        // return process.exit(0);
       }
 
       const reviewVersionBtn = versionElem!.querySelector(".weui-desktop-btn_wrp button") as HTMLElement;
@@ -196,7 +212,9 @@ async function handleReview({ browser, page, config, projectConfig, platformSpec
       timeout,
     });
 
-    submitReviewBtn?.click();
+    if (!isDebug()) {
+      submitReviewBtn?.click();
+    }
 
     logger.success(`========> 提审成功! appId: ${projectConfig.appId}\n`);
 

@@ -2,7 +2,7 @@ import path from "path";
 import process from "process";
 import fs from "fs";
 import chalk from "chalk";
-import { MiniAssetsDir, Platform } from "@hengshuai/mini-type";
+import { CI_ENVS, MiniAssetsDir, Platform } from "@hengshuai/mini-type";
 import open from "open";
 
 export const rootDir = process.cwd();
@@ -37,12 +37,18 @@ export function createImgFileName(platform?: Platform) {
  * 有颜色的log
  */
 export const logger = {
-  info: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#b4b4b4")(...args)),
-  success: (...args: Array<string | number | boolean>) => console.log(chalk.greenBright(...args)),
-  warn: (...args: Array<string | number | boolean>) => console.log(chalk.hex("#ff8515")(...args)),
-  error: (...args: Array<string | number | boolean>) => console.log(chalk.red(...args)),
-  log: (hexColor: string, ...args: Array<string | number | boolean>) => console.log(chalk.hex(hexColor)(...args)),
-  cyan: (...args: Array<string | number | boolean>) => console.log(chalk.cyanBright(...args)),
+  info: (...args: Array<string | number | boolean>) =>
+    console.log(chalk.hex("#b4b4b4")(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
+  success: (...args: Array<string | number | boolean>) =>
+    console.log(chalk.greenBright(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
+  warn: (...args: Array<string | number | boolean>) =>
+    console.log(chalk.hex("#ff8515")(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
+  error: (...args: Array<string | number | boolean>) =>
+    console.log(chalk.red(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
+  log: (hexColor: string, ...args: Array<string | number | boolean>) =>
+    console.log(chalk.hex(hexColor)(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
+  cyan: (...args: Array<string | number | boolean>) =>
+    console.log(chalk.cyanBright(`${useEnv() ? `【${useEnv()}】` : ""}`, ...args, "\n")),
 };
 
 export function openBrowser(url: string) {
@@ -78,4 +84,21 @@ export function createQrHTMLTemplate(type: Platform, timeout: number, qrURL: str
       }, 1000);
     </script>
   `;
+}
+
+export function useEnv(): CI_ENVS {
+  return process.env.ENV as CI_ENVS;
+}
+
+/** 判断当前环境是否debug环境 */
+export function isDebug() {
+  return useEnv() === CI_ENVS.DEBUG;
+}
+
+/**
+ * 设置CI环境
+ * @param {env} CI_ENVS CI环境
+ */
+export function setCIEnv(env: CI_ENVS) {
+  process.env.ENV = env;
 }

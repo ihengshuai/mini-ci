@@ -27,11 +27,11 @@ export async function setupUploadCode(
         es6: true,
         ...projectConfig.compiler,
       },
-      // onProgressUpdate: (args: any) => (args.status === "done" ? logger.success("代码上传成功!\n") : null),
+      // onProgressUpdate: (args: any) => (args.status === "done" ? logger.success("代码上传成功!") : null),
     });
     logger.success(`======> 微信平台代码上传成功, appId: ${projectConfig.appId}`);
   } catch (err: any) {
-    logger.error(`微信平台代码上传失败! appId: ${projectConfig.appId}\n`);
+    logger.error(`微信平台代码上传失败! appId: ${projectConfig.appId}`);
     // err?.message && logger.error(err.message);
     throw err;
   }
