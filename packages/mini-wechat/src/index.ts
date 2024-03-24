@@ -32,7 +32,7 @@ export async function setup(
         logger.error(`请设置该项目privateKeyPath和projectPath! appId: ${projectConfig.appId}`);
         return process.exit(0);
       }
-      logger.cyan(`======> 正在上传微信平台代码, appId: ${projectConfig.appId}`);
+      logger.cyan(`======> 正在上传微信平台代码, appId: ${projectConfig.appId}, ${isDebug() ? "已跳过" : ""}`);
 
       if (!isDebug()) {
         await setupUploadCode(projectConfig, platformSpecificConfig, config);
@@ -46,6 +46,7 @@ export async function setup(
       return process.exit(0);
     }
 
+    // admin业务
     await setupAdmin(projectConfig, platformSpecificConfig, config);
   } catch (error: any) {
     error?.message && logger.error("【wechat error】", error.message);

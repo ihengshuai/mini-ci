@@ -23,7 +23,7 @@ import {
 // import inquirer from "inquirer";
 import puppeteer from "puppeteer";
 import fs from "fs";
-import { handleReview } from "./core/review";
+import { handleReview } from "./review";
 
 export async function setupAdmin(
   projectConfig: IProjectConfig,
