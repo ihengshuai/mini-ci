@@ -24,6 +24,7 @@ import {
 import puppeteer from "puppeteer";
 import fs from "fs";
 import { handleReview } from "./core/review";
+import { handleRelease } from "./core/release";
 
 export async function setupAdmin(
   projectConfig: IProjectConfig,
@@ -82,9 +83,12 @@ export async function setupAdmin(
     versionManagerMenu?.click();
 
     /** 提审 */
-    if (projectConfig.mode === IProjectActionMode.REVIEW) {
+    if (projectConfig.skipReview !== true) {
       await handleReview({ browser, page, config, projectConfig, platformSpecificConfig });
     }
+
+    /** 发布 */
+    // await handleRelease({ browser, page, config, projectConfig, platformSpecificConfig });
 
     // 删除二维码和html
     await Promise.all([deleteFile(qrFilePath), deleteFile(htmlPath)]);

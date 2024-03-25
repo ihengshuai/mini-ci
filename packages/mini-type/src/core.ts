@@ -28,6 +28,11 @@ export interface IProjectConfig {
    * @default false
    */
   skipUpload?: boolean;
+  /**
+   * 跳过提审
+   * @default false
+   */
+  skipReview?: boolean;
   version?: string;
   description?: string;
   /**

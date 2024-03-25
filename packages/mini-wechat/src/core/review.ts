@@ -1,5 +1,6 @@
 import { sleep, isDebug, logger } from "@hengshuai/mini-helper";
 import { IPerHandleParams } from "./type";
+import { IProjectActionMode } from "packages/mini-type/dist";
 
 /** 处理提审 */
 export async function handleReview({ browser, page, config, projectConfig, platformSpecificConfig }: IPerHandleParams) {
@@ -8,11 +9,19 @@ export async function handleReview({ browser, page, config, projectConfig, platf
     const timeout = config.ci!.timeout!;
 
     // 选择对应的版本提交审核
-    await page.waitForSelector(".code_version_logs .code_version_log .weui-desktop-btn_wrp button", {
-      visible: true,
-      timeout,
-    });
+    // await page.waitForSelector(".code_version_logs .code_version_log .weui-desktop-btn_wrp button", {
+    //   visible: true,
+    //   timeout,
+    // });
     // reviewVersionBtn?.click();
+
+    // 等待页面数据请求完
+    await page.waitForResponse(
+      res => res.url().startsWith("https://mp.weixin.qq.com/wxamp/cgi/version/CheckScanGrayAccount"),
+      {
+        timeout,
+      }
+    );
 
     await page.evaluate(async projectConfig => {
       const nodes: HTMLElement[] = ((document.querySelectorAll(".code_version_logs .code_version_log") as any) ||
@@ -36,6 +45,10 @@ export async function handleReview({ browser, page, config, projectConfig, platf
       }
 
       const reviewVersionBtn = versionElem!.querySelector(".weui-desktop-btn_wrp button") as HTMLElement;
+      const hasDisabled = !!reviewVersionBtn.classList.contains("weui-desktop-btn_disabled");
+      if (hasDisabled) {
+        throw Error(`审核错误! version: ${projectConfig.version} 审核按钮已禁用! appId: ${projectConfig.appId}`);
+      }
       reviewVersionBtn?.click();
     }, projectConfig);
 
@@ -94,6 +107,9 @@ export async function handleReview({ browser, page, config, projectConfig, platf
 
     // logger.info(newPage?.url());
   } catch (error) {
+    // 非提审模式模式下不报错，如已提审的直接发版就跳过提审
+    if (projectConfig.mode !== IProjectActionMode.REVIEW) return;
+
     logger.error(`提审失败! appId: ${projectConfig.appId}`);
     console.log(error);
 
